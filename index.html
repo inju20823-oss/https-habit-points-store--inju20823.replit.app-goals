@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>멘탈해빗 (MentalHabit)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== 헤더 ===== -->
+  <header class="app-header">
+    <div class="header-inner">
+      <h1 class="app-title">🧠 멘탈해빗 <span class="app-subtitle">MentalHabit</span></h1>
+      <p class="app-desc">인지행동치료 기반 웰니스 습관 트래커</p>
+    </div>
+  </header>
+
+  <!-- ===== 메인 컨텐츠 ===== -->
+  <main class="main-container">
+
+    <!-- 카테고리 탭 -->
+    <nav class="category-tabs" role="tablist">
+      <button class="tab-btn active" data-tab="bio" role="tab" aria-selected="true">🔋 바이오 루틴</button>
+      <button class="tab-btn" data-tab="action" role="tab" aria-selected="false">⚡ 행동 활성화</button>
+      <button class="tab-btn" data-tab="stimulus" role="tab" aria-selected="false">⏳ 자극 통제</button>
+    </nav>
+
+    <!-- ===== 탭 패널: 바이오 루틴 ===== -->
+    <section class="tab-panel active" id="tab-bio" role="tabpanel">
+
+      <!-- 미션 1: 디지털 기기 차단 -->
+      <div class="mission-card" id="card-m1">
+        <div class="mission-header">
+          <span class="mission-badge">미션 1</span>
+          <h2 class="mission-title">취침 1시간 전 디지털 기기 차단</h2>
+          <p class="mission-sub">스크린 오프 — 60분 카운트다운</p>
+        </div>
+        <div class="mission-body">
+          <div class="timer-display" id="timer-m1">60:00</div>
+          <div class="timer-controls">
+            <button class="btn btn-primary" onclick="startTimer('m1', 3600)">시작</button>
+            <button class="btn btn-outline" onclick="pauseTimer('m1')">일시정지</button>
+            <button class="btn btn-ghost" onclick="resetTimer('m1', 3600)">초기화</button>
+          </div>
+          <button class="btn btn-success btn-complete" onclick="completeMission('미션1: 디지털 기기 차단')">✔ 미션 완료</button>
+        </div>
+      </div>
+
+      <!-- 미션 2: 심호흡 -->
+      <div class="mission-card" id="card-m2">
+        <div class="mission-header">
+          <span class="mission-badge">미션 2</span>
+          <h2 class="mission-title">심호흡 2분 수행</h2>
+          <p class="mission-sub">4-4-8 호흡법 — 흡기 4초 · 숨참기 4초 · 호기 8초</p>
+        </div>
+        <div class="mission-body">
+          <!-- 호흡 애니메이션 원 -->
+          <div class="breath-wrapper">
+            <div class="breath-circle" id="breath-circle">
+              <span class="breath-label" id="breath-label">준비</span>
+            </div>
+          </div>
+          <div class="timer-display" id="timer-m2">02:00</div>
+          <div class="timer-controls">
+            <button class="btn btn-primary" onclick="startBreath()">시작</button>
+            <button class="btn btn-ghost" onclick="resetBreath()">초기화</button>
+          </div>
+          <button class="btn btn-success btn-complete" onclick="completeMission('미션2: 심호흡 4-4-8')">✔ 미션 완료</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===== 탭 패널: 행동 활성화 ===== -->
+    <section class="tab-panel" id="tab-action" role="tabpanel">
+
+      <!-- 미션 3: 환경 정돈 -->
+      <div class="mission-card" id="card-m3">
+        <div class="mission-header">
+          <span class="mission-badge">미션 3</span>
+          <h2 class="mission-title">5분간 주변 환경 1곳 정돈하기</h2>
+          <p class="mission-sub">5분 카운트다운 — 완료 후 체크</p>
+        </div>
+        <div class="mission-body">
+          <div class="timer-display" id="timer-m3">05:00</div>
+          <div class="timer-controls">
+            <button class="btn btn-primary" onclick="startTimer('m3', 300)">시작</button>
+            <button class="btn btn-outline" onclick="pauseTimer('m3')">일시정지</button>
+            <button class="btn btn-ghost" onclick="resetTimer('m3', 300)">초기화</button>
+          </div>
+          <button class="btn btn-success btn-complete" onclick="completeMission('미션3: 환경 정돈 5분')">✔ 미션 완료</button>
+        </div>
+      </div>
+
+      <!-- 미션 4: 감사·성취 기록 -->
+      <div class="mission-card" id="card-m4">
+        <div class="mission-header">
+          <span class="mission-badge">미션 4</span>
+          <h2 class="mission-title">하루 3가지 감사/성취 항목 기록</h2>
+          <p class="mission-sub">인지행동치료(CBT) 기반 — 긍정적 인지 재구성</p>
+        </div>
+        <div class="mission-body">
+          <div class="gratitude-form">
+            <label class="form-label">1. 오늘 감사한 일</label>
+            <input type="text" class="form-input" id="gratitude-1" placeholder="예) 따뜻한 커피 한 잔" maxlength="100" />
+
+            <label class="form-label">2. 오늘 잘한 일</label>
+            <input type="text" class="form-input" id="gratitude-2" placeholder="예) 약속 시간을 잘 지켰다" maxlength="100" />
+
+            <label class="form-label">3. 내일 기대되는 일</label>
+            <input type="text" class="form-input" id="gratitude-3" placeholder="예) 친구와 산책 계획" maxlength="100" />
+
+            <button class="btn btn-primary" onclick="saveGratitude()">💾 저장</button>
+          </div>
+          <button class="btn btn-success btn-complete" onclick="completeMission('미션4: 감사·성취 기록')">✔ 미션 완료</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===== 탭 패널: 자극 통제 ===== -->
+    <section class="tab-panel" id="tab-stimulus" role="tabpanel">
+
+      <!-- 미션 5: 뽀모도로 -->
+      <div class="mission-card" id="card-m5">
+        <div class="mission-header">
+          <span class="mission-badge">미션 5</span>
+          <h2 class="mission-title">싱글 태스킹 타이머</h2>
+          <p class="mission-sub">뽀모도로 — 25분 집중 · 5분 휴식</p>
+        </div>
+        <div class="mission-body">
+          <!-- 뽀모도로 모드 표시 -->
+          <div class="pomodoro-mode" id="pomodoro-mode-label">🍅 집중 모드</div>
+          <div class="timer-display pomodoro-timer" id="timer-m5">25:00</div>
+          <!-- 진행 바 -->
+          <div class="progress-bar-wrapper">
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="pomodoro-progress"></div>
+            </div>
+          </div>
+          <div class="timer-controls">
+            <button class="btn btn-primary" onclick="startPomodoro()">시작</button>
+            <button class="btn btn-outline" onclick="pausePomodoro()">일시정지</button>
+            <button class="btn btn-ghost" onclick="resetPomodoro()">초기화</button>
+          </div>
+          <!-- 뽀모도로 완료 횟수 -->
+          <div class="pomodoro-count">
+            완료한 집중 세션: <strong id="pomodoro-count">0</strong>회
+            &nbsp;|&nbsp; 휴식 완료: <strong id="break-count">0</strong>회
+          </div>
+          <button class="btn btn-success btn-complete" onclick="completeMission('미션5: 뽀모도로 타이머')">✔ 미션 완료</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===== 데이터 로그 대시보드 ===== -->
+    <section class="dashboard-section">
+      <div class="dashboard-header">
+        <h2 class="dashboard-title">📊 감정-행동 데이터 로그</h2>
+        <button class="btn btn-ghost btn-sm" onclick="clearLog()">기록 초기화</button>
+      </div>
+
+      <!-- 감정 점수 평균 요약 -->
+      <div class="summary-row">
+        <div class="summary-card">
+          <span class="summary-num" id="summary-total">0</span>
+          <span class="summary-label">총 미션 완료</span>
+        </div>
+        <div class="summary-card">
+          <span class="summary-num" id="summary-avg">—</span>
+          <span class="summary-label">평균 감정 점수</span>
+        </div>
+        <div class="summary-card">
+          <span class="summary-num" id="summary-today">0</span>
+          <span class="summary-label">오늘 완료</span>
+        </div>
+      </div>
+
+      <!-- CSS 바 그래프 -->
+      <div class="chart-area">
+        <h3 class="chart-title">최근 감정 점수 변화</h3>
+        <div class="bar-chart" id="bar-chart">
+          <p class="empty-log">아직 기록이 없습니다. 미션을 완료하면 여기에 그래프가 나타납니다.</p>
+        </div>
+      </div>
+
+      <!-- 최근 미션 로그 리스트 -->
+      <div class="log-list-area">
+        <h3 class="chart-title">최근 기록 목록</h3>
+        <ul class="log-list" id="log-list">
+          <li class="empty-log">기록이 없습니다.</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== 감정 점수 팝업 ===== -->
+  <div class="popup-overlay" id="emotion-popup" role="dialog" aria-modal="true" aria-label="감정 점수 입력">
+    <div class="popup-card">
+      <h3 class="popup-title">미션 완료! 🎉</h3>
+      <p class="popup-mission-name" id="popup-mission-name"></p>
+      <p class="popup-desc">지금 기분이 어떠신가요?<br/>현재 감정 점수를 선택해 주세요.</p>
+
+      <div class="emotion-slider-wrapper">
+        <input
+          type="range"
+          class="emotion-slider"
+          id="emotion-slider"
+          min="1" max="10" value="5"
+          oninput="updateEmotionLabel(this.value)"
+        />
+        <div class="emotion-labels">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+          <span>6</span><span>7</span><span>8</span><span>9</span><span>10</span>
+        </div>
+      </div>
+
+      <div class="emotion-score-display">
+        <span class="emotion-emoji" id="emotion-emoji">😐</span>
+        <span class="emotion-score-text" id="emotion-score-text">5점 — 보통</span>
+      </div>
+
+      <div class="popup-actions">
+        <button class="btn btn-primary" onclick="saveEmotionScore()">저장하기</button>
+        <button class="btn btn-ghost" onclick="closePopup()">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 알림 토스트 ===== -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ===== 푸터 ===== -->
+  <footer class="app-footer">
+    <p class="footer-notice">
+      ⚠ 이 앱은 생활습관 참고용이며, 의학적 진단이나 치료를 대신할 수 없습니다.
+    </p>
+    <p class="footer-copy">© 2025 멘탈해빗 MentalHabit — CBT 기반 웰니스 습관 트래커</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
